@@ -59,7 +59,7 @@ if( !class_exists( 'PARVAZ_DCL' ) )
                 $discountـrate = $subtotal - $total;
                 $seller = $subtotal - $commission;
                 $vendor_id = get_post( $product_id )->post_author;
-
+                
                 if(!isset($reports[$vendor_id])) {
                     $reports[$vendor_id] = [
                         'product_id' => $product_id,
@@ -85,7 +85,7 @@ if( !class_exists( 'PARVAZ_DCL' ) )
             $commission_amount = [];
 
             foreach( $reports as  $report ) {
-                $commission_amount[$report['vendor_id']] = $commission_amount[$report['vendor_id']] + ($report['commission'] - $report['discount_rate']);
+                $commission_amount[$report['vendor_id']] = $commission_amount[$report['vendor_id']] + ($report['total'] - $report['seller']);
                 $seller_income[$report['vendor_id']] = $seller_income[$report['vendor_id']] + $report['seller'];
             }
             

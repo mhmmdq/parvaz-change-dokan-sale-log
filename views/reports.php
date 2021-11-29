@@ -77,7 +77,7 @@
 </table>    
         
 <?php 
-    echo var_dump(prvazccd_get_links());
+    // echo var_dump(prvazccd_get_links());
 ?>
 
 
