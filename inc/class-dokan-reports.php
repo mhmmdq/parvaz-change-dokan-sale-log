@@ -8,11 +8,6 @@ if( !class_exists('PARVAZ_DCL_REPORTS') ) {
 
         public  $links;
 
-        public function __construct()
-        {
-            
-        }
-
         public function paginate_render( $item_count = 20 ) {
             $items = $this->get_data_pagi( $item_count );
             $items = !empty($items) ? $items : [];

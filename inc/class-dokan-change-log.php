@@ -11,41 +11,6 @@ if( !class_exists( 'PARVAZ_DCL' ) )
             add_action("admin_menu", array($this , "add_sidebar_menu"));
         }
 
-        public function get_order_data( $cart_object ) {
-            global $woocommerce;
-
-                if ( is_admin() && ! defined( 'DOING_AJAX' ) ){
-                    return;
-                }
-
-                if ($coupons = WC()->cart->get_applied_coupons()  == False ) {
-                    $coupon = False;
-                } else {
-                    foreach ( WC()->cart->get_applied_coupons() as $code ) {
-                        $coupon = new WC_Coupon( $code );
-                        $discount_type = $coupon->get_discount_type(); // Get coupon discount type
-                        $coupon_amount = $coupon->get_amount(); // Get coupon amount
-                    }
-                }
-                
-
-                if($coupon !== false) {
-                    foreach ( $cart_object->get_cart() as $cart_item )
-                    {
-                        $commission = dokan()->commission->get_earning_by_product( $cart_item['product_id'], 'admin' );
-                        $quantity = $cart_item['quantity'];
-                        $price = $cart_item['data']->regular_price;
-                        add_post_meta( $cart_item['product_id'] , '_parvaz' , [
-                            'commission' => $commission , 
-                            'quantity' => $quantity ,
-                            'price' => $price,
-                            'coupon_amount' => $coupon_amount,
-                            'rand' => rand(0 , 100)
-                        ]);
-                    }
-                }
-        }
-
         public function change_dokan_reports( $order_id ) {
             global $wpdb;
             $order = new WC_Order( $order_id );
@@ -114,14 +79,6 @@ if( !class_exists( 'PARVAZ_DCL' ) )
 
         public function parvaz_reports_log() {
             view('reports');
-        }
-
-        public function export_reports() {
-
-            if( !class_exists('PARVAZ_DCL_REPORTS') ) {
-                include_once 'class-dokan-reports.php';
-                return PARVAZ_DCL_REPORTS::paginate_render(20);
-            }
         }
 
         public function check_record_exists ( $order_id ) {
