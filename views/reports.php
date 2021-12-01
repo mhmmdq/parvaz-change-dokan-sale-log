@@ -77,6 +77,11 @@
 
 </table>    
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<style>
+    body {
+        background: #f0f0f1;
+    }
+</style>
 <div class="links" style="padding:10px;">
 <?php 
     echo $_reports->render_links();
