@@ -17,7 +17,6 @@ if( !class_exists( 'PARVAZ_DCL' ) )
             $reports = [];
             foreach( $order->get_items() as $item ) {
                 $product_id = $item['product_id'];
-                // var_dump($item);
                 $commission = dokan()->commission->get_earning_by_product( $product_id , 'admin' ) * $item['quantity'] ;
                 $subtotal = $item['subtotal'];
                 $total = $item['total'];
@@ -55,11 +54,6 @@ if( !class_exists( 'PARVAZ_DCL' ) )
             }
             
             if( $this->check_record_exists( $order_id ) == null) {
-                // $wpdb->update( $wpdb->prefix . 'dokan_orders' , [
-                //     'net_amount' => $seller_income
-                // ] , [
-                //     'order_id' => $order_id
-                // ]);
                 foreach($reports as $report) {
                     $wpdb->insert($wpdb->prefix . 'parvaz_dokan_custom_log' , [
                         'order_id' => $order_id , 
@@ -74,8 +68,16 @@ if( !class_exists( 'PARVAZ_DCL' ) )
                     add_post_meta( $product_id , '_parvaz_seller_' , $seller_income[$report['vendor_id']]);
                     add_post_meta( $product_id , '_parvaz_commission_' , $commission_amount[$report['vendor_id']]);
 
+                    $wpdb->update( $wpdb->prefix . 'parvaz_dokan_vendor_balance' , [
+                        'debit'=> $seller_income[$report[' vendor_id']]
+                    ] , [
+                        'vendor_id' => $report['vendor_id'],
+                        'trn_id' => $order_id
+                    ]);
+
                 }
             }
+
         }
 
         public function add_sidebar_menu() {
