@@ -68,6 +68,12 @@ if( !class_exists( 'PARVAZ_DCL' ) )
                         'seller' => $seller_income[$report['vendor_id']] , 
                         'commission' => $commission_amount[$report['vendor_id']]
                     ]);
+                    $product_id = $report['product_id'];
+                    add_post_meta( $product_id , '_parvaz_vendor_name_' , get_post_meta( $order_id , '_billing_first_name' )[0] . ' ' . get_post_meta( $order_id , '_billing_last_name' )[0]);
+                    add_post_meta( $product_id , '_parvaz_total_' , $report['total']);
+                    add_post_meta( $product_id , '_parvaz_seller_' , $seller_income[$report['vendor_id']]);
+                    add_post_meta( $product_id , '_parvaz_commission_' , $commission_amount[$report['vendor_id']]);
+
                 }
             }
         }
