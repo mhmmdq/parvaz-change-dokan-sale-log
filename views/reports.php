@@ -35,7 +35,8 @@
     </thead>
     <tbody>
         <?php 
-            $datas = prvazccd_load_reports();
+            global $_reports;
+            $datas = $_reports->paginate_render(20);
             $datas = !empty($datas) ? $datas : [];
             foreach($datas as $data):
         ?>
@@ -75,10 +76,14 @@
     </tbody>
 
 </table>    
-        
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<div class="links" style="padding:10px;">
+
 <?php 
-    // echo var_dump(prvazccd_get_links());
+    echo $_reports->render_links();
 ?>
+
+</div>
 
 
 </div>

@@ -13,7 +13,7 @@ if( !class_exists('PARVAZ_DCL_REPORTS') ) {
             
         }
 
-        public function paginate_render( $item_count ) {
+        public function paginate_render( $item_count = 20 ) {
             $items = $this->get_data_pagi( $item_count );
             $items = !empty($items) ? $items : [];
             $datas = [];
@@ -38,8 +38,9 @@ if( !class_exists('PARVAZ_DCL_REPORTS') ) {
                 'database'=>DB_NAME
             ]);
             $db = new QueryBuilder;
-            return $db->table($wpdb->prefix . 'parvaz_dokan_custom_log')->orderBy('id' , 'DESC')->pagination(10)->toArray();
+            $data = $db->table($wpdb->prefix . 'parvaz_dokan_custom_log')->orderBy('id' , 'DESC')->pagination( $item_count )->toArray();
             $this->links = $db->links();
+            return $data;
         }
 
         public function  get_order_details( $order_id ) {
