@@ -66,7 +66,7 @@
               <?=$data['status'];?>
              </td>
              <td class="column date">
-                <?=$data['time']->date;?>
+                <?=$data['time'];?>
              </td>
         </tr>
         <?php
