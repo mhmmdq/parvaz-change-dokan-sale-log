@@ -47,7 +47,7 @@ if( !class_exists('PARVAZ_DCL_REPORTS') ) {
             return [
                 'name' => get_post_meta( $order_id , '_billing_first_name' )[0] . ' ' . get_post_meta( $order_id , '_billing_last_name' )[0] ,
                 'tax' => get_post_meta( $order_id , '_order_tax')[0],
-                'shipping_tax' => get_post_meta( $order_id , '_order_shipping_tax' )[0],
+                'shipping_tax' => get_post_meta( $order_id , '_order_shipping' )[0],
                 'status' => $status->get_status(),
                 'time' => $status->get_date_modified(),
             ];
