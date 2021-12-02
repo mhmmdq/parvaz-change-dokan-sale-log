@@ -68,8 +68,15 @@ if( !class_exists( 'PARVAZ_DCL' ) )
                     add_post_meta( $product_id , '_parvaz_seller_' , $seller_income[$report['vendor_id']]);
                     add_post_meta( $product_id , '_parvaz_commission_' , $commission_amount[$report['vendor_id']]);
 
-                    $wpdb->update( $wpdb->prefix . 'parvaz_dokan_vendor_balance' , [
-                        'debit'=> $seller_income[$report[' vendor_id']]
+                    $wpdb->update( $wpdb->prefix . 'dokan_orders' , [
+                        'net_amount'=> $seller_income[$report['vendor_id']],
+                        'order_total' => $seller_income[$report['vendor_id']]
+                    ] , [
+                        'seller_id' => $report['vendor_id'],
+                        'order_id' => $order_id
+                    ]);
+                    $wpdb->update( $wpdb->prefix . 'dokan_vendor_balance' , [
+                        'debit'=> $seller_income[$report['vendor_id']]
                     ] , [
                         'vendor_id' => $report['vendor_id'],
                         'trn_id' => $order_id

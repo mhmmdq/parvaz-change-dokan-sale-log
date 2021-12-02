@@ -4,7 +4,7 @@ Plugin Name: پرواز - اعمال تغییر روی گزارشات دکان
 Plugin URI: https://github.com/mhmmdq/parvaz-change-dokan-sale-log
 Description: افزونه ای برای اصلاح سیستم گزارش گیری دکان
 Author: Mhmmdq
-Version: 0.3.0
+Version: 0.4.0
 Author URI: https://github.com/mhmmdq
 */
 if (!defined('ABSPATH'))
