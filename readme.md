@@ -5,4 +5,4 @@
 # Shop-specific statistics for Etohfeh 
 **A small summary**
 
-[Etohfeh](https://ethofeh.com "Etohfeh") WordPress Store needed a simple plugin to apply the discount from its own fee and see the statistics differently, which is now here
+[Etohfeh](https://etohfeh.com "Etohfeh") WordPress Store needed a simple plugin to apply the discount from its own fee and see the statistics differently, which is now here
