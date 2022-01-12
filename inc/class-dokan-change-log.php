@@ -7,11 +7,12 @@ if( !class_exists( 'PARVAZ_DCL' ) )
 
         public function __construct()
         {
-            add_action( 'woocommerce_thankyou' , [ $this , 'change_dokan_reports' ] );
+            add_action( 'woocommerce_checkout_order_processed' , [ $this , 'change_dokan_reports' ] );
             add_action("admin_menu", array($this , "add_sidebar_menu"));
+            
         }
 
-        public function change_dokan_reports( $order_id ) {
+        public function change_dokan_reports( $order_id , $posted_data , $order ) {
             global $wpdb;
             $order = new WC_Order( $order_id );
             $reports = [];
