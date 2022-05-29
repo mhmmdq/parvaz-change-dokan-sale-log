@@ -93,7 +93,7 @@ if( !class_exists( 'PARVAZ_DCL' ) )
         }
 
         public function parvaz_reports_log() {
-            view('reports');
+            parvaz_report_view('reports');
         }
 
         public function check_record_exists ( $order_id ) {
