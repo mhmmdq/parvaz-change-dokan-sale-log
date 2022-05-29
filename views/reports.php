@@ -35,43 +35,40 @@
     </thead>
     <tbody>
         <?php 
-            global $_reports;
-            $datas = $_reports->paginate_render(20);
-            $datas = !empty($datas) ? $datas : [];
-            foreach($datas as $data):
+            
         ?>
         <tr>
             <td class="column order_id">
-                <a target="_blank" href="<?= get_site_url() . '/wp-admin/post.php?action=edit&post=' . $data['order_id'];?>">#<?=$data['order_id'] . ' ' . $data['name']?></a>
+                <a target="_blank" href="">#  </a>
             </td>
             <td class="column vendor_id">
-                <a target="_blank" href="<?= get_site_url() . '/wp-admin/user-edit.php?user_id=' . $data['vendor_id'] ;?>"> <?php echo get_userdata($data['vendor_id'])->display_name; ?> </a> 
+                <a target="_blank" href="">  </a> 
             </td>
             <td class="column order_total">
-                <div><?=$data['total'];?> </div>
+                <div></div>
             </td>
             <td class="column vendor_earning">
-                <div><?=$data['seller'];?> </div>
+                <div></div>
             </td>
             <td class="column commission">
-                <div><?=$data['commission']?> </div>
+                <div></div>
             </td>
             
             <td class="column shipping_total">
-                <div><?=$data['shipping_tax']?> </div> <!---->
+                <div></div> <!---->
             </td>
             <td class="column tax_total">
-                <div><?=$data['tax']?> </div>
+                <div></div>
             </td>
             <td class="column status">
-              <?=$data['status'];?>
+              
              </td>
              <td class="column date">
-                <?=$data['time'];?>
+                
              </td>
         </tr>
         <?php
-            endforeach;
+            
         ?>
     </tbody>
 
@@ -83,9 +80,6 @@
     }
 </style>
 <div class="links" style="padding:10px;">
-<?php 
-    echo $_reports->render_links();
-?>
 
 </div>
 

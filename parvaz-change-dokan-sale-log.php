@@ -21,8 +21,6 @@ if( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
   include 'vendor/autoload.php';
 }
 
-include_once 'inc/class-dokan-reports.php';
-$_reports = new PARVAZ_DCL_REPORTS;
 
 if( !file_exists( __DIR__ . '/functions.php') ) 
   exit;

@@ -88,12 +88,19 @@ if( !class_exists( 'PARVAZ_DCL' ) )
         }
 
         public function add_sidebar_menu() {
-            add_menu_page("Parvaz_log", "پرواز - گزارشات", "edit_posts",
-            "Parvaz_log", [ $this , 'parvaz_reports_log' ], "https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/18/ffffff/external-link-business-and-management-kiranshastry-lineal-kiranshastry.png" , 1);
+            add_menu_page("Parvaz_log",
+            "پرواز - گزارشات",
+            "edit_posts",
+            "Parvaz_log",
+            [ $this , 'parvaz_reports_log' ],
+            "https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/18/ffffff/external-link-business-and-management-kiranshastry-lineal-kiranshastry.png"
+            , 1);
         }
 
         public function parvaz_reports_log() {
-            parvaz_report_view('reports');
+            include_once 'class-dokan-reports.php';
+            $reports = new PARVAZ_DCL_DOKAN_REPORTS();
+            parvaz_report_view('reports' , ['reports' => $reports->getReports() , 'links' => $reports->getLinks()]);
         }
 
         public function check_record_exists ( $order_id ) {

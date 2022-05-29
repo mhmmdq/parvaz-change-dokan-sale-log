@@ -1,57 +1,76 @@
 <?php
-use Mhmmdq\Database\Connection;
-use Mhmmdq\Database\QueryBuilder;
 
-if( !class_exists('PARVAZ_DCL_REPORTS') ) {
+if( !class_exists('PARVAZ_DCL_DOKAN_REPORTS') ) {
 
-    class PARVAZ_DCL_REPORTS {
+    class PARVAZ_DCL_DOKAN_REPORTS {
 
-        public  $links;
+        public function getReports() {
 
-        public function paginate_render( $item_count = 20 ) {
-            $items = $this->get_data_pagi( $item_count );
-            $items = !empty($items) ? $items : [];
-            $datas = [];
-            foreach ($items as $item) {
-                $extra_data = $this->get_order_details( $item['order_id'] );
-                $datas[] = array_merge($item , $extra_data);
-            }
-            
-            return $datas;
-        }
-        
-        public  function get_data_pagi ( $item_count )
-        {
             global $wpdb;
-            new Connection([
-                'driver'=>'mysql',
-                'host'=>DB_HOST,
-                'username'=>DB_USER,
-                'password'=>DB_PASSWORD,
-                'charset'=>'utf8mb4',
-                'collation'=>'utf8mb4_general_ci',
-                'database'=>DB_NAME
-            ]);
-            $db = new QueryBuilder;
-            $data = $db->table($wpdb->prefix . 'parvaz_dokan_custom_log')->orderBy('id' , 'DESC')->pagination( $item_count )->toArray();
-            $this->links = $db->links();
-            return $data;
+
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $per_page = isset($_GET['per_page']) ? $_GET['per_page'] : 10;
+            $offset = ($page - 1) * $per_page;
+
+            $query = "SELECT * FROM {$wpdb->prefix}parvaz_dokan_custom_log ORDER BY id DESC LIMIT {$offset} , {$per_page}";
+            $reports = $wpdb->get_results($query);
+
+            return $reports;
+
         }
 
-        public function  get_order_details( $order_id ) {
-            $status = new WC_Order( $order_id );
-            return [
-                'name' => get_post_meta( $order_id , '_billing_first_name' )[0] . ' ' . get_post_meta( $order_id , '_billing_last_name' )[0] ,
-                'tax' => get_post_meta( $order_id , '_order_tax')[0],
-                'shipping_tax' => get_post_meta( $order_id , '_order_shipping' )[0],
-                'status' => $status->get_status(),
-                'time' => $status->get_date_modified(),
-            ];
+        public function getTotalReports() {
+
+            global $wpdb;
+
+            $query = "SELECT COUNT(*) FROM {$wpdb->prefix}parvaz_dokan_custom_log";
+            $total = $wpdb->get_var($query);
+
+            return $total;
+
         }
 
-        public function render_links() {
-            return $this->links;
+        public function getReport( $id ) {
+
+            global $wpdb;
+
+            $query = "SELECT * FROM {$wpdb->prefix}parvaz_dokan_custom_log WHERE id = {$id}";
+            $report = $wpdb->get_row($query);
+
+            return $report;
+
         }
+
+        public function getLinks() {
+
+            $total = $this->getTotalReports();
+            $per_page = isset($_GET['per_page']) ? $_GET['per_page'] : 10;
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $links = [];
+
+            $total_pages = ceil($total / $per_page);
+
+            if($total_pages > 1) {
+
+                if($page > 1) {
+                    $links['prev'] = admin_url('admin.php?page=parvaz_dokan_reports&page=' . ($page - 1));
+                }
+
+                if($page < $total_pages) {
+                    $links['next'] = admin_url('admin.php?page=parvaz_dokan_reports&page=' . ($page + 1));
+                }
+
+                if($page < $total_pages) {
+                    $links['next'] = admin_url('admin.php?page=parvaz_dokan_reports&page=' . ($page + 1));
+                }
+
+            }
+
+            return $links;
+
+
+        }
+
     }
 
 }
